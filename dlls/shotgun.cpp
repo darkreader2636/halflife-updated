@@ -276,9 +276,13 @@ void CShotgun::Reload()
 	}
 	else
 	{
+		int iInfiniteAmmo = (int)infinite_ammo.value;
 		// Add them to the clip
 		m_iClip += 1;
-		m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] -= 1;
+		if (iInfiniteAmmo == 0)
+		{
+			m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] -= 1;
+		}
 		m_fInSpecialReload = 1;
 	}
 }

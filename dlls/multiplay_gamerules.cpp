@@ -156,6 +156,8 @@ void CHalfLifeMultiplay::RefreshSkillData()
 
 	// hornet
 	gSkillData.plrDmgHornet = 10;
+
+	gSkillData.plrDmg762 = 200;
 }
 
 // longest the intermission can last, in seconds
@@ -543,6 +545,7 @@ void CHalfLifeMultiplay::PlayerSpawn(CBasePlayer* pPlayer)
 		{
 			pPlayer->GiveNamedItem(weapons_full[i]);
 		}
+		pPlayer->GiveAmmo(168, "9mm", 250);
 		pPlayer->GiveAmmo(60, "uranium", 100);
 		pPlayer->GiveAmmo(5, "Hand Grenade", 10);
 	}
@@ -552,6 +555,7 @@ void CHalfLifeMultiplay::PlayerSpawn(CBasePlayer* pPlayer)
 		{
 			pPlayer->GiveNamedItem(weapons_standart[i]);
 		}
+		pPlayer->GiveAmmo(168, "9mm", 250);
 		pPlayer->GiveAmmo(60, "uranium", 100);
 		pPlayer->GiveAmmo(5, "Hand Grenade", 10);
 	}

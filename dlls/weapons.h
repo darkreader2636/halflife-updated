@@ -17,6 +17,7 @@
 
 #include "effects.h"
 #include "weaponinfo.h"
+#include "game.h"
 
 class CBasePlayer;
 class CBasePlayerWeapon;
@@ -85,6 +86,7 @@ public:
 #define SNARK_WEIGHT 5
 #define SATCHEL_WEIGHT -10
 #define TRIPMINE_WEIGHT -10
+#define SNIPERRIFLE_WEIGHT 10
 
 
 // weapon clip/carry ammo capacities
@@ -100,6 +102,7 @@ public:
 #define SNARK_MAX_CARRY 15
 #define HORNET_MAX_CARRY 8
 #define M203_GRENADE_MAX_CARRY 10
+#define SNIPERRIFLE_MAX_CARRY 15
 
 // the maximum amount of ammo each weapon's clip can hold
 #define WEAPON_NOCLIP -1
@@ -119,6 +122,7 @@ public:
 #define SATCHEL_MAX_CLIP WEAPON_NOCLIP
 #define TRIPMINE_MAX_CLIP WEAPON_NOCLIP
 #define SNARK_MAX_CLIP WEAPON_NOCLIP
+#define SNIPERRIFLE_MAX_CLIP 5
 
 
 // the default amount of ammo that comes with each gun when it spawns
@@ -137,6 +141,7 @@ public:
 #define TRIPMINE_DEFAULT_GIVE 1
 #define SNARK_DEFAULT_GIVE 5
 #define HIVEHAND_DEFAULT_GIVE 8
+#define SNIPERRIFLE_DEFAULT_GIVE 5
 
 // The amount of ammo given to a player by an ammo item.
 #define AMMO_URANIUMBOX_GIVE 20
@@ -150,6 +155,7 @@ public:
 #define AMMO_RPGCLIP_GIVE RPG_MAX_CLIP
 #define AMMO_URANIUMBOX_GIVE 20
 #define AMMO_SNARKBOX_GIVE 5
+#define AMMO_SNIPERRIFLE_GIVE 5
 
 // bullet types
 typedef enum
@@ -160,6 +166,7 @@ typedef enum
 	BULLET_PLAYER_357,		// python
 	BULLET_PLAYER_BUCKSHOT, // shotgun
 	BULLET_PLAYER_CROWBAR,	// crowbar swipe
+	BULLET_PLAYER_762,
 
 	BULLET_MONSTER_9MM,
 	BULLET_MONSTER_MP5,

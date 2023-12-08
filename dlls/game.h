@@ -26,6 +26,16 @@ void GameDLLShutdown();
 #define AMMO_RESERVE	1
 #define AMMO_FULL		2
 
+#define DECLARE_SKILL_CVARS(name)                 \
+	cvar_t sk_##name##1 = {"sk_" #name "1", "0"}; \
+	cvar_t sk_##name##2 = {"sk_" #name "2", "0"}; \
+	cvar_t sk_##name##3 = {"sk_" #name "3", "0"}
+
+#define REGISTER_SKILL_CVARS(name) \
+	CVAR_REGISTER(&sk_##name##1);  \
+	CVAR_REGISTER(&sk_##name##2);  \
+	CVAR_REGISTER(&sk_##name##3)
+
 extern cvar_t	displaysoundlist;
 
 // multiplayer server rules
