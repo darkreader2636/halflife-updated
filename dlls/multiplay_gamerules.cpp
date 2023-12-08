@@ -490,13 +490,72 @@ void CHalfLifeMultiplay::PlayerSpawn(CBasePlayer* pPlayer)
 
 	addDefault = true;
 
-	while (pWeaponEntity = UTIL_FindEntityByClassname(pWeaponEntity, "game_player_equip"))
-	{
-		pWeaponEntity->Touch(pPlayer);
-		addDefault = false;
-	}
+	const char* weapons_full[20] = {
+		"weapon_crowbar", 
+		"weapon_9mmhandgun", 
+		"weapon_shotgun", 
+		"weapon_9mmAR",
+		"weapon_handgrenade",
+		"weapon_357",
+		"weapon_crossbow",
+		"weapon_gauss",
+		"weapon_sniperrifle",
+		"weapon_rpg",
+		"weapon_m249",
+		"weapon_ak47",
+		"weapon_smokegrenade",
+		"weapon_medkit",
 
-	if (addDefault)
+		"item_longjump",
+
+		"ammo_ARgrenades",
+		"ammo_buckshot", 
+		"ammo_rpgclip",
+		"ammo_crossbow",
+		"ammo_357"	
+	};
+
+	const char* weapons_standart[16] = {
+		"weapon_crowbar",
+		"weapon_9mmhandgun",
+		"weapon_shotgun",
+		"weapon_9mmAR",
+		"weapon_handgrenade",
+		"weapon_357",
+		"weapon_crossbow",
+		"weapon_gauss",
+		"weapon_rpg",
+
+		"item_longjump",
+
+		"ammo_ARgrenades",
+		"ammo_buckshot",
+		"ammo_rpgclip",
+		"ammo_crossbow",
+		"ammo_357"
+	};
+
+	int iWeaponGive = (int)spawn_give.value;
+
+	if (iWeaponGive == 2)
+	{
+		for (int i = 0; i < 20; i++)
+		{
+			pPlayer->GiveNamedItem(weapons_full[i]);
+		}
+		pPlayer->GiveAmmo(60, "uranium", 100);
+		pPlayer->GiveAmmo(5, "Hand Grenade", 10);
+	}
+	else if (iWeaponGive == 1)
+	{
+		for (int i = 0; i < 16; i++)
+		{
+			pPlayer->GiveNamedItem(weapons_standart[i]);
+		}
+		pPlayer->GiveAmmo(60, "uranium", 100);
+		pPlayer->GiveAmmo(5, "Hand Grenade", 10);
+	}
+	else
 	{
 		pPlayer->GiveNamedItem("weapon_crowbar");
 		pPlayer->GiveNamedItem("weapon_9mmhandgun");
