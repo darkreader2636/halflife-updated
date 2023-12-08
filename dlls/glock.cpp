@@ -160,13 +160,15 @@ void CGlock::Reload()
 {
 	if (m_pPlayer->ammo_9mm <= 0)
 		return;
+	if (m_iClip >= GLOCK_MAX_CLIP)
+		return; //Don't bother reloading
 
 	bool iResult;
 
 	if (m_iClip == 0)
-		iResult = DefaultReload(17, GLOCK_RELOAD, 1.5);
+		iResult = DefaultReload(17, GLOCK_RELOAD, 40.0f/18.0f);
 	else
-		iResult = DefaultReload(17, GLOCK_RELOAD_NOT_EMPTY, 1.5);
+		iResult = DefaultReload(17, GLOCK_RELOAD_NOT_EMPTY, 40.0f / 18.0f);
 
 	if (iResult)
 	{

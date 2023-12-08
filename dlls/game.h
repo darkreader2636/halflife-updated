@@ -18,6 +18,13 @@
 extern void GameDLLInit( void );
 void GameDLLShutdown();
 
+#define GAMEMODE_NORMAL		0
+#define GAMEMODE_VAMPIRE	1
+#define GAMEMODE_KNIFEAREA	2
+
+#define AMMO_DEFAULT	0
+#define AMMO_RESERVE	1
+#define AMMO_FULL		2
 
 extern cvar_t	displaysoundlist;
 
@@ -42,6 +49,16 @@ extern cvar_t allow_spectators;
 extern cvar_t mp_chattime;
 
 extern cvar_t sv_allowbunnyhopping;
+
+// Deathmatch Advanced CVars
+extern cvar_t spawn_health;
+extern cvar_t spawn_armor;
+extern cvar_t spawn_give;
+extern cvar_t infinite_ammo;
+extern cvar_t minus_frag;
+extern cvar_t throw_crowbar;
+extern cvar_t gamemode;
+extern cvar_t brush_hurt;
 
 // Engine Cvars
 inline cvar_t* g_psv_gravity;

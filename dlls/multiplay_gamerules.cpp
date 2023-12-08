@@ -437,6 +437,9 @@ float CHalfLifeMultiplay::FlPlayerFallDamage(CBasePlayer* pPlayer)
 
 	switch (iFallDamage)
 	{
+	case 2: // No Fall-Damage
+		return 0;
+		break;
 	case 1: //progressive
 		pPlayer->m_flFallVelocity -= PLAYER_MAX_SAFE_FALL_SPEED;
 		return pPlayer->m_flFallVelocity * DAMAGE_FOR_FALL_SPEED;

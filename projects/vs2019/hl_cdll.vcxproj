@@ -179,6 +179,7 @@ cmd /c ""$(ProjectDir)..\..\filecopy.bat" "$(SolutionDir)../../network" "" "delt
     <ClCompile Include="..\..\dlls\crossbow.cpp" />
     <ClCompile Include="..\..\dlls\crowbar.cpp" />
     <ClCompile Include="..\..\dlls\egon.cpp" />
+    <ClCompile Include="..\..\dlls\game.cpp" />
     <ClCompile Include="..\..\dlls\gauss.cpp" />
     <ClCompile Include="..\..\dlls\handgrenade.cpp" />
     <ClCompile Include="..\..\dlls\hornetgun.cpp" />
@@ -275,6 +276,7 @@ cmd /c ""$(ProjectDir)..\..\filecopy.bat" "$(SolutionDir)../../network" "" "delt
     <ClInclude Include="..\..\common\usercmd.h" />
     <ClInclude Include="..\..\common\weaponinfo.h" />
     <ClInclude Include="..\..\dlls\cdll_dll.h" />
+    <ClInclude Include="..\..\dlls\game.h" />
     <ClInclude Include="..\..\engine\APIProxy.h" />
     <ClInclude Include="..\..\engine\cdll_int.h" />
     <ClInclude Include="..\..\engine\custom.h" />

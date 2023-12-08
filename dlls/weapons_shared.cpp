@@ -18,6 +18,7 @@
 #include "player.h"
 #include "weapons.h"
 #include "gamerules.h"
+#include "game.h"
 
 // Precaches the ammo and queues the ammo info for sending to clients
 void AddAmmoNameToAmmoRegistry(const char* szAmmoname, const char* weaponName)
@@ -77,13 +78,22 @@ bool CBasePlayerWeapon::CanDeploy()
 
 bool CBasePlayerWeapon::DefaultReload(int iClipSize, int iAnim, float fDelay, int body)
 {
-	if (m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] <= 0)
-		return false;
+	int iInfiniteAmmo = (int)infinite_ammo.value;
 
-	int j = V_min(iClipSize - m_iClip, m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType]);
+	if (iInfiniteAmmo == AMMO_FULL || iInfiniteAmmo == AMMO_RESERVE)
+	{
+		m_iClip = iClipSize;
+	}
+	else
+	{
+		if (m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] <= 0)
+			return false;
 
-	if (j == 0)
-		return false;
+		int j = V_min(iClipSize - m_iClip, m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType]);
+
+		if (j == 0)
+			return false;
+	}
 
 	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + fDelay;
 

@@ -220,6 +220,8 @@ void CMP5::Reload()
 {
 	if (m_pPlayer->ammo_9mm <= 0)
 		return;
+	if (m_iClip >= MP5_MAX_CLIP)
+		return; // Don't bother reloading
 
 	DefaultReload(MP5_MAX_CLIP, MP5_RELOAD, 1.5);
 }

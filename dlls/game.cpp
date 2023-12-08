@@ -47,6 +47,16 @@ cvar_t mp_chattime = {"mp_chattime", "10", FCVAR_SERVER};
 
 cvar_t sv_allowbunnyhopping = {"sv_allowbunnyhopping", "0", FCVAR_SERVER};
 
+// Custom CVars for Deathmatch Advanced
+cvar_t spawn_health = {"spawn_health", "100", FCVAR_SERVER};	 // Health on Spawn
+cvar_t spawn_armor = {"spawn_armor", "0", FCVAR_SERVER};		 // Armor on Spawn
+cvar_t spawn_give = {"spawn_give", "0", FCVAR_SERVER};			 // Weapons on Spawn 0:Default 1:Only Half-Life Weapons 2:All HL Weapons + Custom Weapons
+cvar_t infinite_ammo = {"infinite_ammo", "0", FCVAR_SERVER};	 // Infinite Ammo 0:Disabled 1:Only ammo in reserve is infinite 2:Infinite Clip
+cvar_t minus_frag = {"minus_frag", "1", FCVAR_SERVER};			 // Remove a point from player after suicide 0:Disabled 1:Enabled(Default)
+cvar_t throw_crowbar = {"throwable_crowbar", "1", FCVAR_SERVER}; // Enable throwable crowbar 1:Enabled 0:Disabled
+cvar_t gamemode = {"mp_gamemode", "0", FCVAR_SERVER};			 // Gamemode 0:Standart 1:Vampire 2:Knife Arena
+cvar_t brush_hurt = {"brush_hurt", "1", FCVAR_SERVER};
+
 //CVARS FOR SKILL LEVEL SETTINGS
 // Agrunt
 cvar_t sk_agrunt_health1 = {"sk_agrunt_health1", "0"};
@@ -498,6 +508,16 @@ void GameDLLInit()
 
 	CVAR_REGISTER(&sv_allowbunnyhopping);
 
+	// Deathmatch Advanced CVars
+	CVAR_REGISTER(&spawn_health);
+	CVAR_REGISTER(&spawn_armor);
+	CVAR_REGISTER(&spawn_give);
+	CVAR_REGISTER(&infinite_ammo);
+	CVAR_REGISTER(&minus_frag);
+	CVAR_REGISTER(&throw_crowbar);
+	CVAR_REGISTER(&gamemode);
+	CVAR_REGISTER(&brush_hurt);
+
 	// REGISTER CVARS FOR SKILL LEVEL STUFF
 	// Agrunt
 	CVAR_REGISTER(&sk_agrunt_health1); // {"sk_agrunt_health1","0"};
@@ -904,7 +924,11 @@ void GameDLLInit()
 	CVAR_REGISTER(&sk_player_leg3);
 	// END REGISTER CVARS FOR SKILL LEVEL STUFF
 
+#ifndef CLIENT_DLL
+
 	InitMapLoadingUtils();
+
+#endif // !CLIENT_DLL
 
 	SERVER_COMMAND("exec skill.cfg\n");
 }

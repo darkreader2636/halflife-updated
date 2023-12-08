@@ -191,6 +191,8 @@ void CPython::Reload()
 {
 	if (m_pPlayer->ammo_357 <= 0)
 		return;
+	if (m_iClip >= PYTHON_MAX_CLIP)
+		return; // Don't bother reloading
 
 	if (m_pPlayer->m_iFOV != 0)
 	{
@@ -204,7 +206,7 @@ void CPython::Reload()
 	bUseScope = g_pGameRules->IsMultiplayer();
 #endif
 
-	DefaultReload(6, PYTHON_RELOAD, 2.0, bUseScope ? 1 : 0);
+	DefaultReload(6, PYTHON_RELOAD, 110.0f/36.0f, bUseScope ? 1 : 0);
 }
 
 
