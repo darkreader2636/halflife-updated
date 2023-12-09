@@ -111,6 +111,50 @@ void CBasePlayerWeapon::ResetEmptySound()
 	m_iPlayEmptySound = true;
 }
 
+void CBasePlayerWeapon::UseClip(int amount)
+{
+	int iInfiniteAmmo = (int)infinite_ammo.value;
+
+	if (iInfiniteAmmo == AMMO_FULL)
+	{
+		return;
+	}
+	else
+	{
+		m_iClip -= amount;
+	}
+	return;
+}
+
+void CBasePlayerWeapon::UsePrimaryAmmo(int amount)
+{
+	int iInfiniteAmmo = (int)infinite_ammo.value;
+
+	if (iInfiniteAmmo == AMMO_FULL || iInfiniteAmmo == AMMO_RESERVE)
+	{
+		return;
+	}
+	else
+	{
+		m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] -= amount;
+	}
+	return;
+}
+void CBasePlayerWeapon::UseSecondaryAmmo(int amount)
+{
+	int iInfiniteAmmo = (int)infinite_ammo.value;
+
+	if (iInfiniteAmmo == AMMO_DEFAULT)
+	{
+		m_pPlayer->m_rgAmmo[m_iSecondaryAmmoType] -= amount;
+	}
+	else
+	{
+		return;
+	}
+	return;
+}
+
 bool CanAttack(float attack_time, float curtime, bool isPredicted)
 {
 #if defined(CLIENT_WEAPONS)

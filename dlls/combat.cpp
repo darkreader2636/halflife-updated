@@ -891,8 +891,16 @@ bool CBaseMonster::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, f
 		pev->velocity = pev->velocity + vecDir * -DamageForce(flDamage);
 	}
 
-	// do the damage
-	pev->health -= flTake;
+	if (pevAttacker == pev)
+	{
+		//Reduce damage taken by player himself
+		pev->health -= flTake * 0.4f; //%40 resistance like tf2
+	}
+	else
+	{
+		// do the damage
+		pev->health -= flTake;
+	}
 
 
 	// HACKHACK Don't kill monsters in a script.  Let them break their scripts first
@@ -1017,9 +1025,9 @@ float CBaseMonster::DamageForce(float damage)
 {
 	float force = damage * ((32 * 32 * 72.0) / (pev->size.x * pev->size.y * pev->size.z)) * 5;
 
-	if (force > 1000.0)
+	if (force > 5000.0)
 	{
-		force = 1000.0;
+		force = 5000.0;
 	}
 
 	return force;

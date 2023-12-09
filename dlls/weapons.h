@@ -320,6 +320,9 @@ public:
 						 // attack key(s)
 	virtual bool PlayEmptySound();
 	virtual void ResetEmptySound();
+	void UseClip(int amount);
+	void UsePrimaryAmmo(int amount);
+	void UseSecondaryAmmo(int amount);
 
 	virtual void SendWeaponAnim(int iAnim, int body = 0);
 
