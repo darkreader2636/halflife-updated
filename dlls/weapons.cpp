@@ -1187,6 +1187,25 @@ void CWeaponBox::Touch(CBaseEntity* pOther)
 				//ALERT ( at_console, "trying to give %s\n", STRING( m_rgpPlayerItems[ i ]->pev->classname ) );
 
 				pItem = m_rgpPlayerItems[i];
+				
+				
+				// Hack for flying_crowbar. Dont pickup if player already
+				// has crowbar.
+				if (pItem->m_iId == WEAPON_CROWBAR)
+				{
+					// check if the player already has this weapon
+					for (int i = 0; i < MAX_ITEM_TYPES; i++)
+					{
+						CBasePlayerItem* it = pPlayer->m_rgpPlayerItems[i];
+						while (it != NULL)
+						{
+							if (it->m_iId == WEAPON_CROWBAR)
+								return;
+							it = it->m_pNext;
+						}
+					}
+				}
+
 				m_rgpPlayerItems[i] = m_rgpPlayerItems[i]->m_pNext; // unlink this weapon from the box
 
 				if (pPlayer->AddPlayerItem(pItem))
@@ -1205,7 +1224,7 @@ void CWeaponBox::Touch(CBaseEntity* pOther)
 //=========================================================
 // CWeaponBox - PackWeapon: Add this weapon to the box
 //=========================================================
-bool CWeaponBox::PackWeapon(CBasePlayerItem* pWeapon)
+bool CWeaponBox::PackWeapon(CBasePlayerItem* pWeapon, bool isDead)
 {
 	// is one of these weapons already packed in this box?
 	if (HasWeapon(pWeapon))
@@ -1249,6 +1268,68 @@ bool CWeaponBox::PackWeapon(CBasePlayerItem* pWeapon)
 	pWeapon->m_pPlayer = NULL;
 
 	//ALERT ( at_console, "packed %s\n", STRING(pWeapon->pev->classname) );
+
+	if (!isDead)
+	{
+		switch (pWeapon->m_iId)
+		{
+		case WEAPON_CROWBAR:
+			SET_MODEL(ENT(pev), "models/w_crowbar.mdl");
+			break;
+		case WEAPON_GLOCK:
+			SET_MODEL(ENT(pev), "models/w_9mmhandgun.mdl");
+			break;
+		case WEAPON_PYTHON:
+			SET_MODEL(ENT(pev), "models/w_357.mdl");
+			break;
+		case WEAPON_MP5:
+			SET_MODEL(ENT(pev), "models/w_9mmAR.mdl");
+			break;
+		case WEAPON_CROSSBOW:
+			SET_MODEL(ENT(pev), "models/w_crossbow.mdl");
+			break;
+		case WEAPON_SHOTGUN:
+			SET_MODEL(ENT(pev), "models/w_shotgun.mdl");
+			break;
+		case WEAPON_RPG:
+			SET_MODEL(ENT(pev), "models/w_rpg.mdl");
+			break;
+		case WEAPON_GAUSS:
+			SET_MODEL(ENT(pev), "models/w_gauss.mdl");
+			break;
+		case WEAPON_EGON:
+			SET_MODEL(ENT(pev), "models/w_egon.mdl");
+			break;
+		case WEAPON_HORNETGUN:
+			SET_MODEL(ENT(pev), "models/w_hgun.mdl");
+			break;
+		case WEAPON_HANDGRENADE:
+			SET_MODEL(ENT(pev), "models/w_grenade.mdl");
+			break;
+		case WEAPON_TRIPMINE:
+			SET_MODEL(ENT(pev), "models/v_tripmine.mdl");
+			pev->frame = 0;
+			pev->body = 3;
+			pev->sequence = 7; // TRIPMINE_WORLD
+			break;
+		case WEAPON_SATCHEL:
+			SET_MODEL(ENT(pev), "models/w_satchel.mdl");
+			break;
+		case WEAPON_SNARK:
+			SET_MODEL(ENT(pev), "models/w_sqknest.mdl");
+			break;
+		case WEAPON_SNIPERRIFLE:
+			SET_MODEL(ENT(pev), "models/w_m40a1.mdl");
+			break;
+		/* case WEAPON_AK47:
+			SET_MODEL(ENT(pev), "models/w_ak47.mdl");
+			break;
+		case WEAPON_M249:
+			SET_MODEL(ENT(pev), "models/w_saw.mdl");
+			break;
+		*/
+		}
+	}
 
 	return true;
 }

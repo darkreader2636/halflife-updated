@@ -20,6 +20,8 @@
 #include "weapons.h"
 #include "player.h"
 #include "gamerules.h"
+#include "game.h"
+#include "flyingcrowbar.h"
 
 
 #define CROWBAR_BODYHIT_VOLUME 128
@@ -135,6 +137,50 @@ void CCrowbar::PrimaryAttack()
 		pev->nextthink = gpGlobals->time + 0.1;
 	}
 }
+
+void CCrowbar::SecondaryAttack()
+{
+	if (throw_crowbar.value == 1)
+	{
+		// Don't throw underwater, and only throw if we were able to detatch
+		// from player.
+		if ((m_pPlayer->pev->waterlevel != 3) &&
+			(m_pPlayer->RemovePlayerItem(this)))
+		{
+			// Get the origin, direction, and fix the angle of the throw.
+			Vector vecSrc = m_pPlayer->GetGunPosition() + gpGlobals->v_right * 8 + gpGlobals->v_forward * 16;
+			Vector vecDir = gpGlobals->v_forward;
+			Vector vecAng = UTIL_VecToAngles(vecDir);
+			vecAng.z = vecDir.z - 90;
+			// Create a flying crowbar.
+			CFlyingCrowbar* pFCBar = (CFlyingCrowbar*)Create("flying_crowbar",
+				vecSrc, Vector(0, 0, 0), m_pPlayer->edict());
+
+			// Give the crowbar its velocity, angle, and spin.
+			// Lower the gravity a bit, so it flys.
+			pFCBar->pev->velocity = vecDir * 500 + m_pPlayer->pev->velocity;
+			;
+			pFCBar->pev->angles = vecAng;
+			pFCBar->pev->avelocity.x = -1000;
+			pFCBar->pev->gravity = .5;
+			pFCBar->m_pPlayer = m_pPlayer;
+			// Do player weapon anim and sound effect.
+			m_pPlayer->SetAnimation(PLAYER_ATTACK1);
+			EMIT_SOUND_DYN(ENT(m_pPlayer->pev), CHAN_WEAPON,
+				"weapons/cbar_miss1.wav", 1, ATTN_NORM, 0,
+				94 + RANDOM_LONG(0, 0xF));
+			// Just for kicks, set this.
+			// But we destroy this weapon anyway so... thppt.
+			m_flNextSecondaryAttack = gpGlobals->time + 0.75;
+			// take item off hud
+			m_pPlayer->pev->weapons &= ~(1 << this->m_iId);
+
+			// Destroy this weapon
+			DestroyItem();
+		}
+	}
+}
+
 
 
 void CCrowbar::Smack()

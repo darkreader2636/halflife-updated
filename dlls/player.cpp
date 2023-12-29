@@ -699,7 +699,7 @@ void CBasePlayer::PackDeadPlayerItems()
 	while (rgpPackWeapons[iPW])
 	{
 		// weapon unhooked from the player. Pack it into der box.
-		pWeaponBox->PackWeapon(rgpPackWeapons[iPW]);
+		pWeaponBox->PackWeapon(rgpPackWeapons[iPW], true);
 
 		iPW++;
 	}
@@ -4614,7 +4614,7 @@ void CBasePlayer::DropPlayerItem(char* pszItemName)
 			CWeaponBox* pWeaponBox = (CWeaponBox*)CBaseEntity::Create("weaponbox", pev->origin + gpGlobals->v_forward * 10, pev->angles, edict());
 			pWeaponBox->pev->angles.x = 0;
 			pWeaponBox->pev->angles.z = 0;
-			pWeaponBox->PackWeapon(pWeapon);
+			pWeaponBox->PackWeapon(pWeapon, false);
 			pWeaponBox->pev->velocity = gpGlobals->v_forward * 300 + gpGlobals->v_forward * 100;
 
 			// drop half of the ammo for this weapon.

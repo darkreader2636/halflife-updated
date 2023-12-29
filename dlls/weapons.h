@@ -469,7 +469,7 @@ public:
 	static TYPEDESCRIPTION m_SaveData[];
 
 	bool HasWeapon(CBasePlayerItem* pCheckItem);
-	bool PackWeapon(CBasePlayerItem* pWeapon);
+	bool PackWeapon(CBasePlayerItem* pWeapon, bool isDead);
 	bool PackAmmo(int iszName, int iCount);
 
 	CBasePlayerItem* m_rgpPlayerItems[MAX_ITEM_TYPES]; // one slot for each
@@ -555,6 +555,7 @@ public:
 	bool GetItemInfo(ItemInfo* p) override;
 
 	void PrimaryAttack() override;
+	void SecondaryAttack() override;
 	bool Swing(bool fFirst);
 	bool Deploy() override;
 	void Holster() override;
