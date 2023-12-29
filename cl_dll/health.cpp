@@ -228,6 +228,23 @@ bool CHudHealth::Draw(float flTime)
 		int iWidth = HealthWidth / 10;
 		UnpackRGB(r, g, b, RGB_YELLOWISH);
 		FillRGBA(x, y, iWidth, iHeight, r, g, b, a);
+
+		int StaminaX = ScreenWidth / 5 + 50;
+
+		if (gHUD.g_iStamina < 1)
+			PlaySound("common/wpn_denyselect.wav", 2);
+		if (gHUD.g_iStamina <= 100)
+			FillRGBA(StaminaX + 125, y - gHUD.m_iFontHeight + 45, 12, 8, 255, 0, 0, 100);
+		if (gHUD.g_iStamina > 100)
+			FillRGBA(StaminaX + 125, y - gHUD.m_iFontHeight + 45, 12, 8, 255, 160, 0, 100);
+		if (gHUD.g_iStamina > 300)
+			FillRGBA(StaminaX + 147, y - gHUD.m_iFontHeight + 45, 12, 8, 255, 160, 0, 100);
+		if (gHUD.g_iStamina > 500)
+			FillRGBA(StaminaX + 169, y - gHUD.m_iFontHeight + 45, 12, 8, 255, 160, 0, 100);
+		if (gHUD.g_iStamina > 700)
+			FillRGBA(StaminaX + 191, y - gHUD.m_iFontHeight + 45, 12, 8, 255, 160, 0, 100);
+		if (gHUD.g_iStamina >= 900)
+			FillRGBA(StaminaX + 213, y - gHUD.m_iFontHeight + 45, 12, 8, 255, 160, 0, 100);
 	}
 
 	DrawDamage(flTime);

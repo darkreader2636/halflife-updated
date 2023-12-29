@@ -606,6 +606,7 @@ public:
 	void AddHudElem(CHudBase* p);
 
 	float GetSensitivity();
+	int g_iStamina; // stores our stamina
 };
 
 extern CHud gHUD;

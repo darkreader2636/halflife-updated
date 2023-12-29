@@ -125,7 +125,14 @@ bool CEgon::HasAmmo()
 void CEgon::UseAmmo(int count)
 {
 	if (m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] >= count)
-		m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] -= count;
+	{
+		int iInfiniteAmmo = (int)infinite_ammo.value;
+
+		if(iInfiniteAmmo == 0)
+		{
+			m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] -= count;
+		}
+	}
 	else
 		m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] = 0;
 }

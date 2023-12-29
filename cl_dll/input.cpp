@@ -104,7 +104,7 @@ kbutton_t in_up;
 kbutton_t in_down;
 kbutton_t in_duck;
 kbutton_t in_reload;
-kbutton_t in_alt1;
+kbutton_t in_dash;
 kbutton_t in_score;
 kbutton_t in_break;
 kbutton_t in_graph; // Display the netgraph
@@ -476,8 +476,19 @@ void IN_DuckDown()
 void IN_DuckUp() { KeyUp(&in_duck); }
 void IN_ReloadDown() { KeyDown(&in_reload); }
 void IN_ReloadUp() { KeyUp(&in_reload); }
-void IN_Alt1Down() { KeyDown(&in_alt1); }
-void IN_Alt1Up() { KeyUp(&in_alt1); }
+/// Stamina///
+void IN_DashDown(void)
+{
+	if (gHUD.g_iStamina > 0)
+	{
+		KeyDown(&in_dash);
+		PlaySound("player/suit_sprint.wav", 2);
+	}
+}
+void IN_DashUp(void)
+{
+	KeyUp(&in_dash);
+}
 void IN_GraphDown() { KeyDown(&in_graph); }
 void IN_GraphUp() { KeyUp(&in_graph); }
 
@@ -656,6 +667,21 @@ void DLLEXPORT CL_CreateMove(float frametime, struct usercmd_s* cmd, int active)
 	float spd;
 	Vector viewangles;
 	static Vector oldangles;
+
+	
+	// alter stamina amount
+	if ((in_dash.state & 1) && (in_forward.state & 1))
+		gHUD.g_iStamina -= gHUD.m_flTimeDelta * 300; // key is pressed - decrement stamina
+	else
+		gHUD.g_iStamina += gHUD.m_flTimeDelta * 200; // key is not pressed - increment stamina
+	if (gHUD.g_iStamina < 0)
+	{
+		gHUD.g_iStamina = 0; // cap stamina at zero so we dont have negative amounts
+		in_dash.state &= ~1; // release the dash button so the client cant keep sprinting
+	}
+	if (gHUD.g_iStamina > 1000) // cap stamina at 1000
+		gHUD.g_iStamina = 1000;
+
 
 	if (0 != active)
 	{
@@ -845,9 +871,9 @@ int CL_ButtonBits(bool bResetState)
 		bits |= IN_RELOAD;
 	}
 
-	if ((in_alt1.state & 3) != 0)
+	if ((in_dash.state & 3) != 0)
 	{
-		bits |= IN_ALT1;
+		bits |= IN_DASH;
 	}
 
 	if ((in_score.state & 3) != 0)
@@ -875,7 +901,7 @@ int CL_ButtonBits(bool bResetState)
 		in_moveright.state &= ~2;
 		in_attack2.state &= ~2;
 		in_reload.state &= ~2;
-		in_alt1.state &= ~2;
+		in_dash.state &= ~2;
 		in_score.state &= ~2;
 	}
 
@@ -958,8 +984,8 @@ void InitInput()
 	gEngfuncs.pfnAddCommand("-duck", IN_DuckUp);
 	gEngfuncs.pfnAddCommand("+reload", IN_ReloadDown);
 	gEngfuncs.pfnAddCommand("-reload", IN_ReloadUp);
-	gEngfuncs.pfnAddCommand("+alt1", IN_Alt1Down);
-	gEngfuncs.pfnAddCommand("-alt1", IN_Alt1Up);
+	gEngfuncs.pfnAddCommand("+dash", IN_DashDown);
+	gEngfuncs.pfnAddCommand("-dash", IN_DashUp);
 	gEngfuncs.pfnAddCommand("+score", IN_ScoreDown);
 	gEngfuncs.pfnAddCommand("-score", IN_ScoreUp);
 	gEngfuncs.pfnAddCommand("+showscores", IN_ScoreDown);
