@@ -894,7 +894,7 @@ bool CBaseMonster::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, f
 	if (pevAttacker == pev)
 	{
 		//Reduce damage taken by player himself
-		pev->health -= flTake * 0.4f; //%40 resistance like tf2
+		pev->health -= flTake * 0.6f; //%40 resistance like tf2
 	}
 	else
 	{

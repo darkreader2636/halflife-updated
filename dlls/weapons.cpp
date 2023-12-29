@@ -323,6 +323,10 @@ void W_Precache()
 	// hornetgun
 	UTIL_PrecacheOtherWeapon("weapon_hornetgun");
 
+	// python
+	UTIL_PrecacheOtherWeapon("weapon_sniperrifle");
+	UTIL_PrecacheOther("ammo_762");
+
 	if (g_pGameRules->IsDeathmatch())
 	{
 		UTIL_PrecacheOther("weaponbox"); // container for dropped deathmatch weapons
@@ -638,6 +642,7 @@ void CBasePlayerWeapon::AddToPlayer(CBasePlayer* pPlayer)
 	CBasePlayerItem::AddToPlayer(pPlayer);
 
 	pPlayer->SetWeaponBit(m_iId);
+
 
 	if (0 == m_iPrimaryAmmoType)
 	{

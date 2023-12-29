@@ -155,7 +155,7 @@ public:
 #define AMMO_RPGCLIP_GIVE RPG_MAX_CLIP
 #define AMMO_URANIUMBOX_GIVE 20
 #define AMMO_SNARKBOX_GIVE 5
-#define AMMO_SNIPERRIFLE_GIVE 5
+#define AMMO_SNIPERRIFLE_GIVE 15
 
 // bullet types
 typedef enum
@@ -1229,4 +1229,64 @@ public:
 
 private:
 	unsigned short m_usSnarkFire;
+};
+
+enum SniperRifleAnim
+{
+	SNIPERRIFLE_DRAW = 0,
+	SNIPERRIFLE_SLOWIDLE,
+	SNIPERRIFLE_FIRE,
+	SNIPERRIFLE_FIRELASTROUND,
+	SNIPERRIFLE_RELOAD1,
+	SNIPERRIFLE_RELOAD2,
+	SNIPERRIFLE_RELOAD3,
+	SNIPERRIFLE_SLOWIDLE2,
+	SNIPERRIFLE_HOLSTER
+};
+
+/**
+ *	@brief Opposing force sniper rifle
+ */
+class CSniperRifle : public CBasePlayerWeapon
+{
+public:
+	using BaseClass = CBasePlayerWeapon;
+
+	void Precache() override;
+	void Spawn() override;
+
+	bool Deploy() override;
+
+	void Holster() override;
+
+	void WeaponIdle() override;
+
+	void PrimaryAttack() override;
+
+	void SecondaryAttack() override;
+
+	void Reload() override;
+
+	int iItemSlot() override;
+
+	bool GetItemInfo(ItemInfo* p) override;
+
+	void IncrementAmmo(CBasePlayer* pPlayer);
+
+	bool UseDecrement() override
+	{
+#if defined(CLIENT_WEAPONS)
+		return true;
+#else
+		return false;
+#endif
+	}
+
+	void ToggleZoom();
+
+private:
+	unsigned short m_usSniper;
+
+	bool m_bReloading;
+	float m_flReloadStart;
 };

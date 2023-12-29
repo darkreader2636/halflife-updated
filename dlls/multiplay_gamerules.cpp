@@ -492,7 +492,7 @@ void CHalfLifeMultiplay::PlayerSpawn(CBasePlayer* pPlayer)
 
 	addDefault = true;
 
-	const char* weapons_full[20] = {
+	const char* weapons_full[21] = {
 		"weapon_crowbar", 
 		"weapon_9mmhandgun", 
 		"weapon_shotgun", 
@@ -514,6 +514,7 @@ void CHalfLifeMultiplay::PlayerSpawn(CBasePlayer* pPlayer)
 		"ammo_buckshot", 
 		"ammo_rpgclip",
 		"ammo_crossbow",
+		"ammo_762",
 		"ammo_357"	
 	};
 
