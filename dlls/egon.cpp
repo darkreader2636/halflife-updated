@@ -218,6 +218,12 @@ void CEgon::PrimaryAttack()
 	Attack();
 }
 
+void CEgon::SecondaryAttack()
+{
+	m_fireMode = FIRE_NARROW;
+	Attack();
+}
+
 void CEgon::Fire(const Vector& vecOrigSrc, const Vector& vecDir)
 {
 	Vector vecDest = vecOrigSrc + vecDir * 2048;

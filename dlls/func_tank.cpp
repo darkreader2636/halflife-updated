@@ -967,7 +967,9 @@ void CFuncTankMortar::Fire(const Vector& barrelEnd, const Vector& forward, entva
 
 			TankTrace(barrelEnd, forward, gTankSpread[m_spread], tr);
 
-			ExplosionCreate(tr.vecEndPos, pev->angles, edict(), pev->impulse, true);
+			// ExplosionCreate( tr.vecEndPos, pev->angles, edict(), pev->impulse, TRUE );
+			//  Mortar kills will give points
+			ExplosionCreate(tr.vecEndPos, pev->angles, m_pController != NULL ? m_pController->edict() : edict(), pev->impulse, true);
 
 			CFuncTank::Fire(barrelEnd, forward, pev);
 		}

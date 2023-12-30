@@ -215,7 +215,9 @@ void CEnvExplosion::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE 
 	// do damage
 	if ((pev->spawnflags & SF_ENVEXPLOSION_NODAMAGE) == 0)
 	{
-		RadiusDamage(pev, pev, m_iMagnitude, CLASS_NONE, DMG_BLAST);
+		// RadiusDamage ( pev, pev, m_iMagnitude, CLASS_NONE, DMG_BLAST );
+		//  Mortar kills will give points
+		RadiusDamage(pev, pev->owner != NULL ? VARS(pev->owner) : pev, m_iMagnitude, CLASS_NONE, DMG_BLAST);
 	}
 
 	SetThink(&CEnvExplosion::Smoke);
