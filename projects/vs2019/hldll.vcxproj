@@ -127,6 +127,7 @@ cmd /c ""$(ProjectDir)..\..\filecopy.bat" "$(SolutionDir)../../network" "" "delt
     <ClCompile Include="..\..\dlls\bigmomma.cpp" />
     <ClCompile Include="..\..\dlls\bloater.cpp" />
     <ClCompile Include="..\..\dlls\bmodels.cpp" />
+    <ClCompile Include="..\..\dlls\bot.cpp" />
     <ClCompile Include="..\..\dlls\bullsquid.cpp" />
     <ClCompile Include="..\..\dlls\buttons.cpp" />
     <ClCompile Include="..\..\dlls\cbase.cpp" />
@@ -258,6 +259,7 @@ cmd /c ""$(ProjectDir)..\..\filecopy.bat" "$(SolutionDir)../../network" "" "delt
     <ClInclude Include="..\..\dlls\activitymap.h" />
     <ClInclude Include="..\..\dlls\animation.h" />
     <ClInclude Include="..\..\dlls\basemonster.h" />
+    <ClInclude Include="..\..\dlls\bot.h" />
     <ClInclude Include="..\..\dlls\cbase.h" />
     <ClInclude Include="..\..\dlls\cdll_dll.h" />
     <ClInclude Include="..\..\dlls\client.h" />

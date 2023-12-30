@@ -47,6 +47,7 @@
 #include "pm_shared.h"
 #include "pm_defs.h"
 #include "UserMessages.h"
+#include "bot.h"
 
 DLL_GLOBAL unsigned int g_ulFrameCount;
 
@@ -539,6 +540,26 @@ void ClientCommand(edict_t* pEntity)
 		// player is dropping an item.
 		player->DropPlayerItem((char*)CMD_ARGV(1));
 	}
+
+	else if (FStrEq(pcmd, "addbot"))
+	{
+		BotCreate(); // If user types "addbot" in console, add a bot.
+	}
+	else if (FStrEq(pcmd, "observer"))
+	{
+		if (CMD_ARGC() > 1)
+		{
+			f_Observer = atoi(CMD_ARGV(1)); // set observer flag
+			CLIENT_PRINTF(pEntity, print_console,
+				UTIL_VarArgs("observer set to %d\n", (int)f_Observer));
+		}
+		else
+		{
+			CLIENT_PRINTF(pEntity, print_console,
+				UTIL_VarArgs("observer is %d\n", (int)f_Observer));
+		}
+	}
+
 	else if (FStrEq(pcmd, "fov"))
 	{
 		if (0 != g_psv_cheats->value && CMD_ARGC() > 1)
@@ -876,11 +897,51 @@ void InitMapLoadingUtils()
 
 static bool g_LastAllowBunnyHoppingState = false;
 
+// START BOT
+CBasePlayer* CBasePlayerByIndex(int playerIndex)
+{
+	CBasePlayer* pPlayer = NULL;
+	entvars_t* pev;
+
+	if (playerIndex > 0 && playerIndex <= gpGlobals->maxClients)
+	{
+		edict_t* pPlayerEdict = INDEXENT(playerIndex);
+		if (pPlayerEdict && !pPlayerEdict->free &&
+			(pPlayerEdict->v.flags & FL_FAKECLIENT || pPlayerEdict->v.flags & FL_CLIENT)) // fake
+		{
+			pev = &pPlayerEdict->v;
+			pPlayer = GetClassPtr((CBasePlayer*)pev);
+		}
+	}
+
+	return pPlayer;
+}
+// END BOT
+
 //
 // GLOBALS ASSUMED SET:  g_ulFrameCount
 //
 void StartFrame()
 {
+	// START BOT
+	// loop through all the players...
+
+	for (int i = 1; i <= gpGlobals->maxClients; i++)
+	{
+		CBasePlayer* pPlayer = CBasePlayerByIndex(i);
+
+		if (!pPlayer) // if invalid then continue with next index...
+			continue;
+
+		// check if this is a FAKECLIENT (i.e. is it a bot?)
+		if (FBitSet(pPlayer->pev->flags, FL_FAKECLIENT))
+		{
+			// call the think function for the bot...
+			pPlayer->Think();
+		}
+	}
+	// END BOT
+
 	if (g_pGameRules)
 		g_pGameRules->Think();
 
