@@ -152,6 +152,7 @@ cmd /c ""$(ProjectDir)..\..\filecopy.bat" "$(SolutionDir)../../network" "" "delt
     <ClCompile Include="..\..\dlls\genericmonster.cpp" />
     <ClCompile Include="..\..\dlls\ggrenade.cpp" />
     <ClCompile Include="..\..\dlls\gman.cpp" />
+    <ClCompile Include="..\..\dlls\grapple.cpp" />
     <ClCompile Include="..\..\dlls\handgrenade.cpp" />
     <ClCompile Include="..\..\dlls\hassassin.cpp" />
     <ClCompile Include="..\..\dlls\headcrab.cpp" />
@@ -274,6 +275,7 @@ cmd /c ""$(ProjectDir)..\..\filecopy.bat" "$(SolutionDir)../../network" "" "delt
     <ClInclude Include="..\..\dlls\flyingcrowbar.h" />
     <ClInclude Include="..\..\dlls\func_break.h" />
     <ClInclude Include="..\..\dlls\gamerules.h" />
+    <ClInclude Include="..\..\dlls\grapple.h" />
     <ClInclude Include="..\..\dlls\hornet.h" />
     <ClInclude Include="..\..\dlls\items.h" />
     <ClInclude Include="..\..\dlls\monsterevent.h" />

@@ -84,6 +84,9 @@ enum sbar_data
 
 #define CHAT_INTERVAL 1.0f
 
+// Oz grapple
+class CGrappleBolt;
+
 class CBasePlayer : public CBaseMonster
 {
 public:
@@ -93,6 +96,12 @@ public:
 	void Observer_SetMode(int iMode);
 	void Observer_CheckTarget();
 	void Observer_CheckProperties();
+
+	void PlayerReleaseGrapple(void);
+	// Oz grapple
+	CGrappleBolt* pGrappleBolt;
+	bool IsHanging;
+
 	EHANDLE m_hObserverTarget;
 	float m_flNextObserverInput;
 	int m_iObserverWeapon;	 // weapon of current tracked target

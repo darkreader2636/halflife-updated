@@ -327,6 +327,8 @@ void W_Precache()
 	UTIL_PrecacheOtherWeapon("weapon_sniperrifle");
 	UTIL_PrecacheOther("ammo_762");
 
+	UTIL_PrecacheOther("grapple_bolt");
+
 	if (g_pGameRules->IsDeathmatch())
 	{
 		UTIL_PrecacheOther("weaponbox"); // container for dropped deathmatch weapons

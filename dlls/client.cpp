@@ -48,6 +48,7 @@
 #include "pm_defs.h"
 #include "UserMessages.h"
 #include "bot.h"
+#include "grapple.h"
 
 DLL_GLOBAL unsigned int g_ulFrameCount;
 
@@ -122,12 +123,28 @@ void ClientDisconnect(edict_t* pEntity)
 		}
 	}
 
+	entvars_t* pev = &pEntity->v;
+
+	auto pPlayer = reinterpret_cast<CBasePlayer*>(GET_PRIVATE(pEntity));
+
+	// Oz grapple
+	if (pPlayer->pGrappleBolt)
+	{
+		if (pPlayer->IsHanging)
+		{
+			pPlayer->IsHanging = false;
+			pPlayer->m_afPhysicsFlags &= ~PFLAG_ONTRAIN;
+		}
+		pev->movetype = MOVETYPE_WALK;
+		pev->gravity = 1;
+		pPlayer->pGrappleBolt->Killed(0, 0);
+		pPlayer->pGrappleBolt = NULL;
+	}
+
 	// since the edict doesn't get deleted, fix it so it doesn't interfere.
 	pEntity->v.takedamage = DAMAGE_NO; // don't attract autoaim
 	pEntity->v.solid = SOLID_NOT;	   // nonsolid
 	UTIL_SetOrigin(&pEntity->v, pEntity->v.origin);
-
-	auto pPlayer = reinterpret_cast<CBasePlayer*>(GET_PRIVATE(pEntity));
 
 	if (pPlayer)
 	{
@@ -559,6 +576,41 @@ void ClientCommand(edict_t* pEntity)
 				UTIL_VarArgs("observer is %d\n", (int)f_Observer));
 		}
 	}
+
+			// Oz grapple
+	else if (FStrEq(pcmd, "+hook"))
+	{
+		if (pev->deadflag == DEAD_RESPAWNABLE || pev->deadflag == DEAD_DYING || pev->deadflag == DEAD_DEAD || pev->movetype == MOVETYPE_NOCLIP || grappledisable.value > 0)
+			return;
+
+		CBasePlayer* plr = GetClassPtr((CBasePlayer*)pev);
+
+		if (plr->pGrappleBolt)
+			plr->pGrappleBolt->Killed(0, 0);
+		plr->pGrappleBolt = CGrappleBolt::BoltCreate();
+		plr->pGrappleBolt->Init(plr);
+	}
+	else if (FStrEq(pcmd, "-hook"))
+	{
+		CBasePlayer* plr = GetClassPtr((CBasePlayer*)pev);
+
+		if (plr->pGrappleBolt)
+		{
+			if (plr->IsHanging)
+			{
+				plr->IsHanging = false;
+				plr->m_afPhysicsFlags &= ~PFLAG_ONTRAIN;
+			}
+			// Oz runes - make sure we don't reset the gravity of
+			// someone with the low gravity rune
+			pev->gravity = 1;
+
+			pev->movetype = MOVETYPE_WALK;
+			plr->pGrappleBolt->Killed(0, 0);
+			plr->pGrappleBolt = NULL;
+		}
+	}
+	// Oz grapple end
 
 	else if (FStrEq(pcmd, "fov"))
 	{

@@ -70,6 +70,12 @@ extern cvar_t throw_crowbar;
 extern cvar_t gamemode;
 extern cvar_t brush_hurt;
 
+extern cvar_t grappleairspeed;
+extern cvar_t grapplewaterspeed;
+extern cvar_t grappledragspeed;
+extern cvar_t grappledisable;
+extern cvar_t allow_grapple;
+
 // Engine Cvars
 inline cvar_t* g_psv_gravity;
 inline cvar_t* g_psv_aim;

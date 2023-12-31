@@ -42,6 +42,8 @@
 #include "UserMessages.h"
 #include "client.h"
 
+#include "grapple.h"
+
 // #define DUCKFIX
 
 extern void CopyToBodyQue(entvars_t* pev);
@@ -1183,6 +1185,21 @@ bool CBasePlayer::IsOnLadder()
 void CBasePlayer::PlayerDeathThink()
 {
 	float flForward;
+
+	// Oz Grapple
+	CBasePlayer* plr = GetClassPtr((CBasePlayer*)pev);
+	if (plr->pGrappleBolt)
+	{
+		if (IsHanging)
+		{
+			IsHanging = false;
+			m_afPhysicsFlags &= ~PFLAG_ONTRAIN;
+		}
+		pev->movetype = MOVETYPE_WALK;
+		pev->gravity = 1;
+		plr->pGrappleBolt->Killed(0, 0);
+		plr->pGrappleBolt = NULL;
+	}
 
 	if (FBitSet(pev->flags, FL_ONGROUND))
 	{
@@ -4517,6 +4534,23 @@ void CBasePlayer::ResetAutoaim()
 	}
 	m_fOnTarget = false;
 }
+
+void CBasePlayer::PlayerReleaseGrapple(void)
+{
+	if (pGrappleBolt)
+	{
+		if (IsHanging)
+		{
+			IsHanging = false;
+			m_afPhysicsFlags &= ~PFLAG_ONTRAIN;
+		}
+		pev->gravity = 1;
+		pev->movetype = MOVETYPE_WALK;
+		pGrappleBolt->Killed(0, 0);
+		pGrappleBolt = NULL;
+	}
+}
+
 
 /*
 =============

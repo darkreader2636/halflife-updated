@@ -57,6 +57,12 @@ cvar_t throw_crowbar = {"throwable_crowbar", "1", FCVAR_SERVER}; // Enable throw
 cvar_t gamemode = {"mp_gamemode", "0", FCVAR_SERVER};			 // Gamemode 0:Standart 1:Vampire 2:Knife Arena
 cvar_t brush_hurt = {"brush_hurt", "1", FCVAR_SERVER};
 
+cvar_t grappleairspeed = {"grapple_airspeed", "1500"};
+cvar_t grapplewaterspeed = {"grapple_waterspeed", "1000"};
+cvar_t grappledragspeed = {"grapple_dragspeed", "700"};
+cvar_t grappledisable = {"disable_grapple", "0"};
+cvar_t allow_grapple = {"allow_grapple", "1"};
+
 //CVARS FOR SKILL LEVEL SETTINGS
 // Agrunt
 cvar_t sk_agrunt_health1 = {"sk_agrunt_health1", "0"};
@@ -521,6 +527,12 @@ void GameDLLInit()
 	CVAR_REGISTER(&throw_crowbar);
 	CVAR_REGISTER(&gamemode);
 	CVAR_REGISTER(&brush_hurt);
+
+	CVAR_REGISTER(&grappledisable);
+	CVAR_REGISTER(&grappleairspeed);
+	CVAR_REGISTER(&grapplewaterspeed);
+	CVAR_REGISTER(&grappledragspeed);
+	CVAR_REGISTER(&allow_grapple);
 
 	// REGISTER CVARS FOR SKILL LEVEL STUFF
 	// Agrunt
