@@ -1649,6 +1649,10 @@ void CHalfLifeMultiplay::SendMOTDToClient(edict_t* client)
 	char* pFileList;
 	char* aFileList = pFileList = (char*)LOAD_FILE_FOR_ME((char*)CVAR_GET_STRING("motdfile"), &length);
 
+	MESSAGE_BEGIN(MSG_ONE, gmsgMapName, NULL, client);
+		WRITE_STRING(STRING(gpGlobals->mapname));
+	MESSAGE_END();
+
 	// send the server name
 	MESSAGE_BEGIN(MSG_ONE, gmsgServerName, NULL, client);
 	WRITE_STRING(CVAR_GET_STRING("hostname"));

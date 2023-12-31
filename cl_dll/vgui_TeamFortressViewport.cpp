@@ -1991,6 +1991,17 @@ bool TeamFortressViewport::MsgFunc_MOTD(const char* pszName, int iSize, void* pb
 	return true;
 }
 
+bool TeamFortressViewport::MsgFunc_MapName(const char* pszName, int iSize, void* pbuf)
+{
+	char command[64];
+	char szCommand[256];
+	BEGIN_READ(pbuf, iSize);
+	// strncat(command, READ_STRING(),64);
+	sprintf(szCommand, "exec cfg/%s.cfg\n", READ_STRING());
+	gEngfuncs.pfnClientCmd(szCommand);
+	return true;
+}
+
 bool TeamFortressViewport::MsgFunc_BuildSt(const char* pszName, int iSize, void* pbuf)
 {
 	BEGIN_READ(pbuf, iSize);

@@ -597,6 +597,7 @@ public:
 	bool MsgFunc_Detpack(const char *pszName, int iSize, void *pbuf );
 	bool MsgFunc_VGUIMenu(const char *pszName, int iSize, void *pbuf );
 	bool MsgFunc_MOTD( const char *pszName, int iSize, void *pbuf );
+	bool MsgFunc_MapName(const char* pszName, int iSize, void* pbuf);
 	bool MsgFunc_BuildSt( const char *pszName, int iSize, void *pbuf );
 	bool MsgFunc_RandomPC( const char *pszName, int iSize, void *pbuf );
 	bool MsgFunc_ServerName( const char *pszName, int iSize, void *pbuf );

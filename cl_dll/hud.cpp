@@ -209,6 +209,14 @@ int __MsgFunc_MOTD(const char* pszName, int iSize, void* pbuf)
 	return 0;
 }
 
+int __MsgFunc_MapName(const char* pszName, int iSize, void* pbuf)
+{
+	if (gViewPort)
+		return static_cast<int>(gViewPort->MsgFunc_MapName(pszName, iSize, pbuf));
+	return 0;
+}
+
+
 int __MsgFunc_BuildSt(const char* pszName, int iSize, void* pbuf)
 {
 	if (gViewPort)
@@ -308,6 +316,8 @@ void CHud::Init()
 	HOOK_MESSAGE(ScoreInfo);
 	HOOK_MESSAGE(TeamScore);
 	HOOK_MESSAGE(TeamInfo);
+
+	HOOK_MESSAGE(MapName);
 
 	HOOK_MESSAGE(Spectator);
 	HOOK_MESSAGE(AllowSpec);
