@@ -65,6 +65,7 @@ CSatchel g_Satchel;
 CTripmine g_Tripmine;
 CSqueak g_Snark;
 CSniperRifle g_Sniper;
+CM249 g_M249;
 
 
 /*
@@ -466,6 +467,7 @@ void HUD_InitClientWeapons()
 	HUD_PrepEntity(&g_Tripmine, &player);
 	HUD_PrepEntity(&g_Snark, &player);
 	HUD_PrepEntity(&g_Sniper, &player);
+	HUD_PrepEntity(&g_M249, &player);
 }
 
 /*
@@ -592,6 +594,9 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 	case WEAPON_SNIPERRIFLE:
 		pWeapon = &g_Sniper;
 		break;
+	case WEAPON_M249:
+		pWeapon = &g_M249;
+		break;
 	}
 
 	// Store pointer to our destination entity_state_t so we can get our origin, etc. from it
@@ -692,6 +697,8 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 	player.ammo_hornets = (int)from->client.vuser2[0];
 	player.ammo_rockets = (int)from->client.ammo_rockets;
 	player.ammo_762		= (int)from->client.iuser3;
+	player.ammo_762nato = (int)from->client.fuser1;
+	player.ammo_556 = (int)from->client.iuser4;
 
 
 	// Point to current weapon object
@@ -768,6 +775,8 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 	to->client.vuser2[0] = player.ammo_hornets;
 	to->client.ammo_rockets = player.ammo_rockets;
 	to->client.iuser3 = player.ammo_762;
+	to->client.fuser1 = player.ammo_762nato;
+	to->client.iuser4 = player.ammo_556;
 
 	if (player.m_pActiveItem->m_iId == WEAPON_RPG)
 	{

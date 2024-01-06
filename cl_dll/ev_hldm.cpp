@@ -287,6 +287,8 @@ void EV_HLDM_DecalGunshot(pmtrace_t* pTrace, int iBulletType)
 		case BULLET_PLAYER_BUCKSHOT:
 		case BULLET_PLAYER_357:
 		case BULLET_PLAYER_762:
+		case BULLET_PLAYER_762NATO:
+		case BULLET_PLAYER_556:
 		default:
 			// smoke and decal
 			EV_HLDM_GunshotDecalTrace(pTrace, EV_HLDM_DamageDecal(pe));
@@ -416,8 +418,23 @@ void EV_HLDM_FireBullets(int idx, float* forward, float* right, float* up, int c
 
 				EV_HLDM_PlayTextureSound(idx, &tr, vecSrc, vecEnd, iBulletType);
 				EV_HLDM_DecalGunshot(&tr, iBulletType);
+				break;
 
 			case BULLET_PLAYER_762:
+
+				EV_HLDM_PlayTextureSound(idx, &tr, vecSrc, vecEnd, iBulletType);
+				EV_HLDM_DecalGunshot(&tr, iBulletType);
+
+				break;
+
+			case BULLET_PLAYER_762NATO:
+
+				EV_HLDM_PlayTextureSound(idx, &tr, vecSrc, vecEnd, iBulletType);
+				EV_HLDM_DecalGunshot(&tr, iBulletType);
+
+				break;
+
+			case BULLET_PLAYER_556:
 
 				EV_HLDM_PlayTextureSound(idx, &tr, vecSrc, vecEnd, iBulletType);
 				EV_HLDM_DecalGunshot(&tr, iBulletType);
@@ -1619,6 +1636,62 @@ void EV_SniperFire(event_args_t* args)
 		0,
 		args->fparam1,
 		args->fparam2);
+}
+
+void EV_M249Fire(event_args_t* args)
+{
+	int iBody = args->iparam1;
+
+	const bool bAlternatingEject = args->bparam1 != 0;
+
+	Vector up, right, forward;
+
+	AngleVectors(args->angles, forward, right, up);
+
+	int iShell =
+		bAlternatingEject ? gEngfuncs.pEventAPI->EV_FindModelIndex("models/saw_link.mdl") : gEngfuncs.pEventAPI->EV_FindModelIndex("models/saw_shell.mdl");
+
+	if (EV_IsLocal(args->entindex))
+	{
+		EV_MuzzleFlash();
+		gEngfuncs.pEventAPI->EV_WeaponAnimation(gEngfuncs.pfnRandomLong(0, 2) + M249_SHOOT1, iBody);
+		V_PunchAxis(0, gEngfuncs.pfnRandomFloat(-2, 2));
+		V_PunchAxis(1, gEngfuncs.pfnRandomFloat(-1, 1));
+	}
+
+	Vector ShellVelocity;
+	Vector ShellOrigin;
+
+	EV_GetDefaultShellInfo(
+		args,
+		args->origin, args->velocity,
+		ShellVelocity,
+		ShellOrigin,
+		forward, right, up,
+		-28.0, 24.0, 4.0);
+
+	EV_EjectBrass(ShellOrigin, ShellVelocity, args->angles[1], iShell, TE_BOUNCE_SHELL);
+
+	gEngfuncs.pEventAPI->EV_PlaySound(
+		args->entindex,
+		args->origin, CHAN_WEAPON, "weapons/saw_fire1.wav",
+		VOL_NORM, ATTN_NORM, 0, 94 + gEngfuncs.pfnRandomLong(0, 15));
+
+	Vector vecSrc;
+
+	EV_GetGunPosition(args, vecSrc, args->origin);
+
+	Vector vecAiming = forward;
+
+	EV_HLDM_FireBullets(
+		args->entindex,
+		forward, right, up,
+		1,
+		vecSrc, vecAiming,
+		8192.0,
+		BULLET_PLAYER_556,
+		0, nullptr,
+		args->fparam1, args->fparam2);
 }
 
 void EV_TrainPitchAdjust(event_args_t* args)

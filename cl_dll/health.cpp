@@ -64,7 +64,7 @@ bool CHudHealth::Init()
 
 	memset(m_dmg, 0, sizeof(DAMAGE_IMAGE) * NUM_DMG_TYPES);
 
-
+	
 	gHUD.AddHudElem(this);
 	return true;
 }
@@ -74,6 +74,7 @@ void CHudHealth::Reset()
 	// make sure the pain compass is cleared when the player respawns
 	m_fAttackFront = m_fAttackRear = m_fAttackRight = m_fAttackLeft = 0;
 
+	gHUD.g_iStamina = 1000; //Reset Stamina
 
 	// force all the flashing damage icons to expire
 	m_bitsDamage = 0;

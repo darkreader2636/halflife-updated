@@ -342,6 +342,8 @@ void CGameRules::RefreshSkillData()
 	gSkillData.plrDmgHornet = GetSkillCvar("sk_plr_hornet_dmg");
 
 	gSkillData.plrDmg762 = GetSkillCvar("sk_plr_762_bullet");
+	gSkillData.plrDmg762nato = GetSkillCvar("sk_plr_762nato_bullet");
+	gSkillData.plrDmg556 = GetSkillCvar("sk_plr_556_bullet");
 
 	// HEALTH/CHARGE
 	gSkillData.suitchargerCapacity = GetSkillCvar("sk_suitcharger");

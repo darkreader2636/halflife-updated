@@ -158,6 +158,9 @@ void CHalfLifeMultiplay::RefreshSkillData()
 	gSkillData.plrDmgHornet = 10;
 
 	gSkillData.plrDmg762 = 200;
+
+	gSkillData.plrDmg762nato = 18;
+	gSkillData.plrDmg556 = 10;
 }
 
 // longest the intermission can last, in seconds
@@ -492,7 +495,7 @@ void CHalfLifeMultiplay::PlayerSpawn(CBasePlayer* pPlayer)
 
 	addDefault = true;
 
-	const char* weapons_full[21] = {
+	const char* weapons_full[25] = {
 		"weapon_crowbar", 
 		"weapon_9mmhandgun", 
 		"weapon_shotgun", 
@@ -515,7 +518,11 @@ void CHalfLifeMultiplay::PlayerSpawn(CBasePlayer* pPlayer)
 		"ammo_rpgclip",
 		"ammo_crossbow",
 		"ammo_762",
-		"ammo_357"	
+		"ammo_357",
+		"ammo_556",
+		"ammo_556",
+		"ammo_556",
+		"ammo_556"
 	};
 
 	const char* weapons_standart[16] = {
@@ -542,7 +549,7 @@ void CHalfLifeMultiplay::PlayerSpawn(CBasePlayer* pPlayer)
 
 	if (iWeaponGive == 2)
 	{
-		for (int i = 0; i < 20; i++)
+		for (int i = 0; i < 25; i++)
 		{
 			pPlayer->GiveNamedItem(weapons_full[i]);
 		}

@@ -157,6 +157,8 @@ void DecalGunshot(TraceResult* pTrace, int iBulletType)
 		case BULLET_PLAYER_BUCKSHOT:
 		case BULLET_PLAYER_357:
 		case BULLET_PLAYER_762:
+		case BULLET_PLAYER_762NATO:
+		case BULLET_PLAYER_556:
 		default:
 			// smoke and decal
 			UTIL_GunshotDecalTrace(pTrace, DamageDecal(pEntity, DMG_BULLET));
@@ -326,6 +328,9 @@ void W_Precache()
 	// python
 	UTIL_PrecacheOtherWeapon("weapon_sniperrifle");
 	UTIL_PrecacheOther("ammo_762");
+
+	UTIL_PrecacheOtherWeapon("weapon_m249");
+	UTIL_PrecacheOther("ammo_556");
 
 	UTIL_PrecacheOther("grapple_bolt");
 

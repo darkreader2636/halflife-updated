@@ -87,6 +87,7 @@ public:
 #define SATCHEL_WEIGHT -10
 #define TRIPMINE_WEIGHT -10
 #define SNIPERRIFLE_WEIGHT 10
+#define M249_WEIGHT 20
 
 
 // weapon clip/carry ammo capacities
@@ -103,6 +104,7 @@ public:
 #define HORNET_MAX_CARRY 8
 #define M203_GRENADE_MAX_CARRY 10
 #define SNIPERRIFLE_MAX_CARRY 15
+#define M249_MAX_CARRY 200
 
 // the maximum amount of ammo each weapon's clip can hold
 #define WEAPON_NOCLIP -1
@@ -123,6 +125,7 @@ public:
 #define TRIPMINE_MAX_CLIP WEAPON_NOCLIP
 #define SNARK_MAX_CLIP WEAPON_NOCLIP
 #define SNIPERRIFLE_MAX_CLIP 5
+#define M249_MAX_CLIP 50
 
 
 // the default amount of ammo that comes with each gun when it spawns
@@ -142,6 +145,7 @@ public:
 #define SNARK_DEFAULT_GIVE 5
 #define HIVEHAND_DEFAULT_GIVE 8
 #define SNIPERRIFLE_DEFAULT_GIVE 5
+#define M249_DEFAULT_GIVE 50
 
 // The amount of ammo given to a player by an ammo item.
 #define AMMO_URANIUMBOX_GIVE 20
@@ -156,6 +160,7 @@ public:
 #define AMMO_URANIUMBOX_GIVE 20
 #define AMMO_SNARKBOX_GIVE 5
 #define AMMO_SNIPERRIFLE_GIVE 15
+#define AMMO_M249_GIVE 50
 
 // bullet types
 typedef enum
@@ -167,6 +172,8 @@ typedef enum
 	BULLET_PLAYER_BUCKSHOT, // shotgun
 	BULLET_PLAYER_CROWBAR,	// crowbar swipe
 	BULLET_PLAYER_762,
+	BULLET_PLAYER_762NATO,
+	BULLET_PLAYER_556,
 
 	BULLET_MONSTER_9MM,
 	BULLET_MONSTER_MP5,
@@ -1290,5 +1297,75 @@ private:
 	unsigned short m_usSniper;
 
 	bool m_bReloading;
+	float m_flReloadStart;
+};
+
+enum M249Anim
+{
+	M249_SLOWIDLE = 0,
+	M249_IDLE2,
+	M249_RELOAD_START,
+	M249_RELOAD_END,
+	M249_HOLSTER,
+	M249_DRAW,
+	M249_SHOOT1,
+	M249_SHOOT2,
+	M249_SHOOT3
+};
+
+class CM249 : public CBasePlayerWeapon
+{
+public:
+	using BaseClass = CBasePlayerWeapon;
+
+	void Precache() override;
+
+	void Spawn() override;
+
+	bool Deploy() override;
+
+	void Holster() override;
+
+	void WeaponIdle() override;
+
+	void PrimaryAttack() override;
+
+	void Reload() override;
+
+	int iItemSlot() override;
+
+	bool GetItemInfo(ItemInfo* p) override;
+
+	bool UseDecrement() override
+	{
+#if defined(CLIENT_WEAPONS)
+		return true;
+#else
+		return false;
+#endif
+	}
+
+	void GetWeaponData(weapon_data_t& data) override;
+
+	void SetWeaponData(const weapon_data_t& data) override;
+
+private:
+	static int RecalculateBody(int iClip);
+
+private:
+	unsigned short m_usFireM249;
+
+	float m_flNextAnimTime;
+
+	int m_iShell;
+
+	// Used to alternate between ejecting shells and links. - Solokiller
+	bool m_bAlternatingEject;
+	int m_iLink;
+	int m_iSmoke;
+	int m_iFire;
+
+	bool m_bReloading;
+	float m_flReloadStartTime;
 	float m_flReloadStart;
 };

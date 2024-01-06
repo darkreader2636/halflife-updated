@@ -1,4 +1,4 @@
-/***
+	/***
 *
 *	Copyright (c) 1996-2001, Valve LLC. All rights reserved.
 *	
@@ -388,6 +388,13 @@ cvar_t sk_plr_762_bullet1 = {"sk_plr_762_bullet1", "0"};
 cvar_t sk_plr_762_bullet2 = {"sk_plr_762_bullet2", "0"};
 cvar_t sk_plr_762_bullet3 = {"sk_plr_762_bullet3", "0"};
 
+cvar_t sk_plr_762nato_bullet1 = {"sk_plr_762nato_bullet1", "0"};
+cvar_t sk_plr_762nato_bullet2 = {"sk_plr_762nato_bullet2", "0"};
+cvar_t sk_plr_762nato_bullet3 = {"sk_plr_762nato_bullet3", "0"};
+
+cvar_t sk_plr_556_bullet1 = {"sk_plr_556_bullet1", "0"};
+cvar_t sk_plr_556_bullet2 = {"sk_plr_556_bullet2", "0"};
+cvar_t sk_plr_556_bullet3 = {"sk_plr_556_bullet3", "0"};
 
 // WORLD WEAPONS
 cvar_t sk_12mm_bullet1 = {"sk_12mm_bullet1", "0"};
@@ -856,11 +863,20 @@ void GameDLLInit()
 	CVAR_REGISTER(&sk_plr_hornet_dmg2); // {"sk_plr_hornet_dmg2","0"};
 	CVAR_REGISTER(&sk_plr_hornet_dmg3); // {"sk_plr_hornet_dmg3","0"};
 
-	// HORNET
+	// SNIPER
 	CVAR_REGISTER(&sk_plr_762_bullet2); // {"sk_plr_762_dmg2","0"};
 	CVAR_REGISTER(&sk_plr_762_bullet1); // {"sk_plr_762_dmg1","0"};
 	CVAR_REGISTER(&sk_plr_762_bullet3); // {"sk_plr_762_dmg3","0"};
 
+	// AK
+	CVAR_REGISTER(&sk_plr_762nato_bullet2); // {"sk_plr_762nato_dmg2","0"};
+	CVAR_REGISTER(&sk_plr_762nato_bullet1); // {"sk_plr_762nato_dmg1","0"};
+	CVAR_REGISTER(&sk_plr_762nato_bullet3); // {"sk_plr_762nato_dmg3","0"};
+
+	// M249
+	CVAR_REGISTER(&sk_plr_556_bullet2); // {"sk_plr_556_dmg2","0"};
+	CVAR_REGISTER(&sk_plr_556_bullet1); // {"sk_plr_556_dmg1","0"};
+	CVAR_REGISTER(&sk_plr_556_bullet3); // {"sk_plr_556_dmg3","0"};
 
 	// WORLD WEAPONS
 	CVAR_REGISTER(&sk_12mm_bullet1); // {"sk_12mm_bullet1","0"};

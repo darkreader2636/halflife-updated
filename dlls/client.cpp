@@ -1985,6 +1985,8 @@ void UpdateClientData(const edict_t* ent, int sendweapons, struct clientdata_s* 
 			cd->ammo_cells = pl->ammo_uranium;
 			cd->vuser2.x = pl->ammo_hornets;
 			cd->iuser3 = pl->ammo_762;
+			cd->fuser1 = pl->ammo_762nato;
+			cd->iuser4 = pl->ammo_556;
 
 
 			if (pl->m_pActiveItem)
