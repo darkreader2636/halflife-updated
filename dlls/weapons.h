@@ -88,6 +88,7 @@ public:
 #define TRIPMINE_WEIGHT -10
 #define SNIPERRIFLE_WEIGHT 10
 #define M249_WEIGHT 20
+#define AK47_WEIGHT 25
 
 
 // weapon clip/carry ammo capacities
@@ -105,6 +106,7 @@ public:
 #define M203_GRENADE_MAX_CARRY 10
 #define SNIPERRIFLE_MAX_CARRY 15
 #define M249_MAX_CARRY 200
+#define AK47_MAX_CARRY 90
 
 // the maximum amount of ammo each weapon's clip can hold
 #define WEAPON_NOCLIP -1
@@ -126,6 +128,7 @@ public:
 #define SNARK_MAX_CLIP WEAPON_NOCLIP
 #define SNIPERRIFLE_MAX_CLIP 5
 #define M249_MAX_CLIP 50
+#define AK47_MAX_CLIP 30
 
 
 // the default amount of ammo that comes with each gun when it spawns
@@ -146,6 +149,7 @@ public:
 #define HIVEHAND_DEFAULT_GIVE 8
 #define SNIPERRIFLE_DEFAULT_GIVE 5
 #define M249_DEFAULT_GIVE 50
+#define AK47_DEFAULT_GIVE 30
 
 // The amount of ammo given to a player by an ammo item.
 #define AMMO_URANIUMBOX_GIVE 20
@@ -161,6 +165,7 @@ public:
 #define AMMO_SNARKBOX_GIVE 5
 #define AMMO_SNIPERRIFLE_GIVE 15
 #define AMMO_M249_GIVE 50
+#define AMMO_AK47_GIVE 30
 
 // bullet types
 typedef enum
@@ -1368,4 +1373,45 @@ private:
 	bool m_bReloading;
 	float m_flReloadStartTime;
 	float m_flReloadStart;
+};
+
+
+enum ak47_e
+{
+	AK47_IDLE1,
+	AK47_RELOAD,
+	AK47_DRAW,
+	AK47_SHOOT1,
+	AK47_SHOOT2,
+	AK47_SHOOT3,
+};
+
+class CAK47 : public CBasePlayerWeapon
+{
+public:
+	virtual void Spawn();
+	virtual void Precache();
+	virtual bool GetItemInfo(ItemInfo* p);
+	virtual bool Deploy();
+	virtual int iItemSlot();
+	virtual void PrimaryAttack();
+	virtual void SecondaryAttack();
+	virtual void Reload();
+	virtual void WeaponIdle();
+	virtual bool UseDecrement()
+	{
+#ifdef CLIENT_WEAPONS
+		return true;
+#else
+		return false;
+#endif
+	}
+
+public:
+	int m_iShell;
+	int iShellOn;
+
+private:
+	int m_iShotsFired;
+	unsigned short m_usFireAK47;
 };

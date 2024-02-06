@@ -66,6 +66,7 @@ CTripmine g_Tripmine;
 CSqueak g_Snark;
 CSniperRifle g_Sniper;
 CM249 g_M249;
+CAK47 g_AK47;
 
 
 /*
@@ -468,6 +469,7 @@ void HUD_InitClientWeapons()
 	HUD_PrepEntity(&g_Snark, &player);
 	HUD_PrepEntity(&g_Sniper, &player);
 	HUD_PrepEntity(&g_M249, &player);
+	HUD_PrepEntity(&g_AK47, &player);
 }
 
 /*
@@ -596,6 +598,9 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 		break;
 	case WEAPON_M249:
 		pWeapon = &g_M249;
+		break;
+	case WEAPON_AK47:
+		pWeapon = &g_AK47;
 		break;
 	}
 

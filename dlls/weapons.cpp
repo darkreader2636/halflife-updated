@@ -332,6 +332,9 @@ void W_Precache()
 	UTIL_PrecacheOtherWeapon("weapon_m249");
 	UTIL_PrecacheOther("ammo_556");
 
+	UTIL_PrecacheOtherWeapon("weapon_ak47");
+	UTIL_PrecacheOther("ammo_762nato");
+
 	UTIL_PrecacheOther("grapple_bolt");
 
 	if (g_pGameRules->IsDeathmatch())

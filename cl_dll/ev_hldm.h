@@ -33,6 +33,7 @@ void EV_TripmineFire(event_args_t* args);
 void EV_SnarkFire(event_args_t* args);
 void EV_SniperFire(event_args_t* args);
 void EV_M249Fire(event_args_t* args);
+void EV_AK47Fire(event_args_t* args);
 
 
 
