@@ -495,7 +495,7 @@ void CHalfLifeMultiplay::PlayerSpawn(CBasePlayer* pPlayer)
 
 	addDefault = true;
 
-	const char* weapons_full[25] = {
+	const char* weapons_full[28] = {
 		"weapon_crowbar", 
 		"weapon_9mmhandgun", 
 		"weapon_shotgun", 
@@ -522,7 +522,10 @@ void CHalfLifeMultiplay::PlayerSpawn(CBasePlayer* pPlayer)
 		"ammo_556",
 		"ammo_556",
 		"ammo_556",
-		"ammo_556"
+		"ammo_556",
+		"ammo_762nato",
+		"ammo_762nato",
+		"ammo_762nato"
 	};
 
 	const char* weapons_standart[16] = {
@@ -549,7 +552,7 @@ void CHalfLifeMultiplay::PlayerSpawn(CBasePlayer* pPlayer)
 
 	if (iWeaponGive == 2)
 	{
-		for (int i = 0; i < 25; i++)
+		for (int i = 0; i < 28; i++)
 		{
 			pPlayer->GiveNamedItem(weapons_full[i]);
 		}
@@ -726,7 +729,10 @@ void CHalfLifeMultiplay::DeathNotice(CBasePlayer* pVictim, entvars_t* pKiller, e
 	WRITE_BYTE(killer_index);				// the killer
 	WRITE_BYTE(ENTINDEX(pVictim->edict())); // the victim
 	WRITE_STRING(killer_weapon_name);		// what they were killed by (should this be a string?)
+	WRITE_BYTE(pVictim->m_bHeadshotKilled);
 	MESSAGE_END();
+
+	pVictim->m_bHeadshotKilled = false;
 
 	// replace the code names with the 'real' names
 	if (0 == strcmp(killer_weapon_name, "egon"))

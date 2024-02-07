@@ -100,6 +100,7 @@ public:
 	void PlayerReleaseGrapple(void);
 	// Oz grapple
 	CGrappleBolt* pGrappleBolt;
+	bool m_bHeadshotKilled;
 	bool IsHanging;
 
 	EHANDLE m_hObserverTarget;
@@ -224,6 +225,7 @@ public:
 	virtual void PostThink();
 	Vector GetGunPosition() override;
 	bool TakeHealth(float flHealth, int bitsDamageType) override;
+	int ActiveWeapon();
 	void TraceAttack(entvars_t* pevAttacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType) override;
 	bool TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
 	void Killed(entvars_t* pevAttacker, int iGib) override;

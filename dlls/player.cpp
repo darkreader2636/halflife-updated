@@ -297,6 +297,11 @@ Vector CBasePlayer::GetGunPosition()
 	return origin;
 }
 
+int CBasePlayer::ActiveWeapon()
+{
+	return m_pActiveItem->m_iId;
+}
+
 //=========================================================
 // TraceAttack
 //=========================================================
@@ -305,26 +310,46 @@ void CBasePlayer::TraceAttack(entvars_t* pevAttacker, float flDamage, Vector vec
 	if (0 != pev->takedamage)
 	{
 		m_LastHitGroup = ptr->iHitgroup;
+		CBaseEntity* pAttacker = CBaseEntity ::Instance(pevAttacker);
 
 		switch (ptr->iHitgroup)
 		{
 		case HITGROUP_GENERIC:
 			break;
 		case HITGROUP_HEAD:
+			if (pevAttacker->flags & FL_CLIENT)
+			{
+				ClientPrint(pevAttacker, HUD_PRINTCENTER, "Headshot");
+			}
+			if (pAttacker && pAttacker->Classify() == CLASS_PLAYER)
+			{
+				CBasePlayer* PK = (CBasePlayer*)pAttacker;
+				if (PK->ActiveWeapon() == WEAPON_AK47)
+				{
+					flDamage *= 100;
+					m_bHeadshotKilled = true;
+					break;
+				}
+			}
+			m_bHeadshotKilled = true;
 			flDamage *= gSkillData.plrHead;
 			break;
 		case HITGROUP_CHEST:
+			m_bHeadshotKilled = false;
 			flDamage *= gSkillData.plrChest;
 			break;
 		case HITGROUP_STOMACH:
+			m_bHeadshotKilled = false;
 			flDamage *= gSkillData.plrStomach;
 			break;
 		case HITGROUP_LEFTARM:
 		case HITGROUP_RIGHTARM:
+			m_bHeadshotKilled = false;
 			flDamage *= gSkillData.plrArm;
 			break;
 		case HITGROUP_LEFTLEG:
 		case HITGROUP_RIGHTLEG:
+			m_bHeadshotKilled = false;
 			flDamage *= gSkillData.plrLeg;
 			break;
 		default:

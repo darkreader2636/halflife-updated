@@ -375,6 +375,8 @@ CGameRules* InstallGameRules()
 {
 	SERVER_COMMAND("exec game.cfg\n");
 	SERVER_EXECUTE();
+	SERVER_EXECUTE();
+	SERVER_EXECUTE();
 
 	if (0 == gpGlobals->deathmatch)
 	{

@@ -88,7 +88,7 @@ public:
 #define TRIPMINE_WEIGHT -10
 #define SNIPERRIFLE_WEIGHT 10
 #define M249_WEIGHT 20
-#define AK47_WEIGHT 25
+#define AK47_WEIGHT 15
 
 
 // weapon clip/carry ammo capacities
